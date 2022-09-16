@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.IO;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -13,11 +12,15 @@ namespace SkyGate.Game
         [SerializeField]
         private AudioSource _player;
 
+        [SerializeField]
+        private GameObject _songDataCategory;
+
         public bool IsPlaying => _player.isPlaying;
 
         private void Awake()
         {
             Instance = this;
+            _songDataCategory.SetActive(false);
         }
 
         private void Update()
