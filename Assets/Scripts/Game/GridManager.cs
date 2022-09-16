@@ -7,6 +7,8 @@ namespace SkyGate.Game
 {
     public class GridManager : MonoBehaviour
     {
+        public static GridManager Instance { get; private set; }
+
         [SerializeReference]
         private GameObject _horizontalLinePrefab;
 
@@ -15,14 +17,22 @@ namespace SkyGate.Game
 
         private readonly List<Transform> _horizontalLines = new();
 
-        private const float _padding = 100f;
-
-        private void Start()
+        private void Awake()
         {
-            for (int i = 0; i < (Screen.height / _padding) + _padding; i++)
+            Instance = this;
+        }
+
+        public void ResetGrid()
+        {
+            foreach (var line in _horizontalLines)
+            {
+                Destroy(line.gameObject);
+            }
+            _horizontalLines.Clear();
+            for (int i = 0; i < (Screen.height / MusicManager.Instance.BPM) + MusicManager.Instance.BPM; i++)
             {
                 var go = Instantiate(_horizontalLinePrefab, _gridContainer);
-                ((RectTransform)go.transform).anchoredPosition = new Vector2(0f, i * _padding);
+                ((RectTransform)go.transform).anchoredPosition = new Vector2(0f, i * MusicManager.Instance.BPM);
                 _horizontalLines.Add(go.transform);
             }
         }
@@ -34,10 +44,10 @@ namespace SkyGate.Game
                 foreach (var line in _horizontalLines)
                 {
                     var rTransform = (RectTransform)line;
-                    rTransform.anchoredPosition = new Vector2(0f, rTransform.anchoredPosition.y - (Time.deltaTime * MusicManager.Instance.CurrentSong.BPM));
+                    rTransform.anchoredPosition = new Vector2(0f, rTransform.anchoredPosition.y - (Time.deltaTime * MusicManager.Instance.BPM));
                     if (rTransform.anchoredPosition.y < 0f)
                     {
-                        rTransform.anchoredPosition = new(0f, _horizontalLines.Max(x => ((RectTransform)x).anchoredPosition.y) + _padding);
+                        rTransform.anchoredPosition = new(0f, _horizontalLines.Max(x => ((RectTransform)x).anchoredPosition.y) + MusicManager.Instance.BPM);
                     }
                 }
             }

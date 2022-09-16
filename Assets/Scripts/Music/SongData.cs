@@ -78,7 +78,7 @@ namespace SkyGate.Music
 
         public string AudioClipPath => $"{_currentPath}/song.{MusicFileExtension}";
 
-        public int BPM { private set; get; }
+        public int BPM { set; get; }
         public string Name { private set; get; }
         public string MusicFileExtension { private set; get; }
         private string _currentPath;

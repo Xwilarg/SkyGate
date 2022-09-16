@@ -83,5 +83,14 @@ namespace SkyGate.SongEditor
             _songName.text = song.Name;
             _bpm.text = song.BPM.ToString();
         }
+
+        public void OnBPMChange(string fieldValue)
+        {
+            var newValue = int.Parse(fieldValue);
+            if (newValue > 0)
+            {
+                MusicManager.Instance.UpdateBPM(newValue);
+            }
+        }
     }
 }

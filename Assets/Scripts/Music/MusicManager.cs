@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using SkyGate.Game;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -14,7 +15,7 @@ namespace SkyGate.Music
         [SerializeField]
         private AudioSource _player;
 
-        public SongData CurrentSong { get; set; }
+        private SongData _currentSong;
 
         /// <summary>
         /// Is the Audio Source currently playing
@@ -45,7 +46,7 @@ namespace SkyGate.Music
         {
             if (!_player.isPlaying)
             {
-                _player.UnPause();
+                _player.Play();
             }
         }
 
@@ -59,19 +60,35 @@ namespace SkyGate.Music
             _player.Stop();
         }
 
-        public void SaveSong()
+        public void UpdateBPM(int newValue)
         {
-            CurrentSong.Save();
+            _currentSong.BPM = newValue;
+            Stop();
+            GridManager.Instance.ResetGrid();
         }
 
+        public int BPM => _currentSong.BPM;
+
+        /// <summary>
+        /// Save song data to persistent storage
+        /// </summary>
+        public void SaveSong()
+        {
+            _currentSong.Save();
+        }
+
+        /// <summary>
+        /// Load a song into the game and start playing it
+        /// </summary>
         public IEnumerator LoadSong(SongData songData)
         {
-            CurrentSong = songData;
+            _currentSong = songData;
             using UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip($"file://{songData.AudioClipPath}", _extensionMapping[songData.MusicFileExtension]);
             yield return req.SendWebRequest();
             if (req.responseCode == 200)
             {
                 _player.clip = DownloadHandlerAudioClip.GetContent(req);
+                GridManager.Instance.ResetGrid();
                 _player.Play();
             }
             else
