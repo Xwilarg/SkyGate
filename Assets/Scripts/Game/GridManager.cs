@@ -15,7 +15,6 @@ namespace SkyGate.Game
 
         private readonly List<Transform> _horizontalLines = new();
 
-        private const float _scrollingSpeed = 200f;
         private const float _padding = 100f;
 
         private void Start()
@@ -35,7 +34,7 @@ namespace SkyGate.Game
                 foreach (var line in _horizontalLines)
                 {
                     var rTransform = (RectTransform)line;
-                    rTransform.anchoredPosition = new Vector2(0f, rTransform.anchoredPosition.y - (Time.deltaTime * _scrollingSpeed));
+                    rTransform.anchoredPosition = new Vector2(0f, rTransform.anchoredPosition.y - (Time.deltaTime * MusicManager.Instance.CurrentSong.BPM));
                     if (rTransform.anchoredPosition.y < 0f)
                     {
                         rTransform.anchoredPosition = new(0f, _horizontalLines.Max(x => ((RectTransform)x).anchoredPosition.y) + _padding);

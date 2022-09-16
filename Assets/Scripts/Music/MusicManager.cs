@@ -14,20 +14,15 @@ namespace SkyGate.Music
         [SerializeField]
         private AudioSource _player;
 
-        [SerializeField]
-        private GameObject _songDataCategory;
-
-        [SerializeField]
-        private TMP_InputField _songName;
-        [SerializeField]
-        private TMP_InputField _bpm;
-
-        private SongData _currentSong;
+        public SongData CurrentSong { get; private set; }
 
         /// <summary>
         /// Is the Audio Source currently playing
         /// </summary>
         public bool IsPlaying => _player.isPlaying;
+
+        public float SongDuration => _player.clip.length;
+        public float TimeElapsed => _player.time;
 
         /// <summary>
         /// Is the extension given in parameter allowed to be played in the Audio Source
@@ -44,7 +39,6 @@ namespace SkyGate.Music
         private void Awake()
         {
             Instance = this;
-            _songDataCategory.SetActive(false);
         }
 
         private void Update()
@@ -55,43 +49,44 @@ namespace SkyGate.Music
             }
         }
 
+        public void Play()
+        {
+            _player.Play();
+        }
+
+        public void Pause()
+        {
+            _player.Pause();
+        }
+
+        public void Stop()
+        {
+            _player.Stop();
+        }
+
         public void SaveSong()
         {
-            _currentSong.Save();
+            CurrentSong.Save();
         }
 
         public void LoadSong(SongData data)
         {
-            _currentSong = data;
-            LoadMetadata();
+            CurrentSong = data;
         }
 
-        public void LoadSong(FileInfo file)
-        {
-            StartCoroutine(LoadSongInternal(file));
-        }
-
-        private IEnumerator LoadSongInternal(FileInfo file)
+        public IEnumerator LoadSong(FileInfo file)
         {
             using UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip($"file://{file.FullName}", _extensionMapping[file.Extension[1..]]);
             yield return req.SendWebRequest();
             if (req.responseCode == 200)
             {
                 _player.clip = DownloadHandlerAudioClip.GetContent(req);
-                _currentSong = SongData.FromFileInfo(file);
-                LoadMetadata();
+                CurrentSong = SongData.FromFileInfo(file);
             }
             else
             {
                 Debug.LogError($"Failed to fetch file: {req.responseCode}");
             }
-        }
-
-        private void LoadMetadata()
-        {
-            _songDataCategory.SetActive(true);
-            _songName.text = _currentSong.Name;
-            _bpm.text = _currentSong.BPM.ToString();
         }
     }
 }
