@@ -43,7 +43,7 @@ namespace SkyGate.SongEditor
                 var ext = file.Extension[1..];
                 if (ext == "bin") // Binary file, contains data about a song
                 {
-                    MusicManager.Instance.LoadSong(SongData.FromFile(path));
+                    MusicManager.Instance.LoadSong(SongData.FromGameFile(file));
                     LoadMetadata(MusicManager.Instance.CurrentSong);
                 }
                 else if (MusicManager.Instance.IsExtensionAllowed(ext)) // Path to a music file, create a new song project

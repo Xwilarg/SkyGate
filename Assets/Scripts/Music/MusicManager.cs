@@ -81,7 +81,7 @@ namespace SkyGate.Music
             if (req.responseCode == 200)
             {
                 _player.clip = DownloadHandlerAudioClip.GetContent(req);
-                CurrentSong = SongData.FromFileInfo(file);
+                CurrentSong = SongData.FromMusicFile(file);
             }
             else
             {
