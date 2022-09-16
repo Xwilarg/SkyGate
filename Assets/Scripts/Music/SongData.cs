@@ -44,7 +44,7 @@ namespace SkyGate.Music
             using FileStream fi = new(file.FullName, FileMode.Open, FileAccess.Read);
             using BinaryReader reader = new(fi);
 
-            reader.ReadInt32();
+            reader.ReadByte(); // Version
             string name = reader.ReadString();
             string extension = reader.ReadString();
             int bpm = reader.ReadInt32();
