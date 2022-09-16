@@ -41,13 +41,14 @@ namespace SkyGate.Game
         {
             if (MusicManager.Instance.IsPlaying)
             {
-                foreach (var line in _horizontalLines)
+                for (int i = 0; i < _horizontalLines.Count; i++)
                 {
-                    var rTransform = (RectTransform)line;
+                    var previous = i == 0 ? _horizontalLines.Last() : _horizontalLines[i - 1];
+                    var rTransform = (RectTransform)_horizontalLines[i];
                     rTransform.anchoredPosition = new Vector2(0f, rTransform.anchoredPosition.y - (Time.deltaTime * MusicManager.Instance.BPM));
                     if (rTransform.anchoredPosition.y < 0f)
                     {
-                        rTransform.anchoredPosition = new(0f, _horizontalLines.Max(x => ((RectTransform)x).anchoredPosition.y) + MusicManager.Instance.BPM);
+                        rTransform.anchoredPosition = new(0f, ((RectTransform)previous.transform).anchoredPosition.y + MusicManager.Instance.BPM);
                     }
                 }
             }
