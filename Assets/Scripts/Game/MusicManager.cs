@@ -13,9 +13,19 @@ namespace SkyGate.Game
         [SerializeField]
         private AudioSource _player;
 
+        public bool IsPlaying => _player.isPlaying;
+
         private void Awake()
         {
             Instance = this;
+        }
+
+        private void Update()
+        {
+            if (!_player.isPlaying && _player.clip != null && _player.clip.loadState == AudioDataLoadState.Loaded)
+            {
+                _player.Play();
+            }
         }
 
         public void LoadSong(string path)
@@ -35,7 +45,6 @@ namespace SkyGate.Game
             if (req.responseCode == 200)
             {
                 _player.clip = DownloadHandlerAudioClip.GetContent(req);
-                _player.Play();
             }
             else
             {
