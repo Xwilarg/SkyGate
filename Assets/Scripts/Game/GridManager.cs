@@ -60,5 +60,10 @@ namespace SkyGate.Game
                 }
             }
         }
+
+        public float GetGridIndex(float y)
+        {
+            return Mathf.Floor(y / MusicManager.Instance.BPM * 4f) / 4f;
+        }
     }
 }

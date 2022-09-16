@@ -97,10 +97,10 @@ namespace SkyGate.SongEditor
 
         public void OnClick(InputAction.CallbackContext value)
         {
-            if (value.performed)
+            if (value.performed && MusicManager.Instance.IsSongSet)
             {
                 var mousePos = Mouse.current.position.ReadValue();
-                Debug.Log($"Line pressed: {PlayerController.Instance.GetLine(mousePos.x)}");
+                Debug.Log($"Line pressed: {PlayerController.Instance.GetLine(mousePos.x)} ; {GridManager.Instance.GetGridIndex(mousePos.y)}");
             }
         }
     }

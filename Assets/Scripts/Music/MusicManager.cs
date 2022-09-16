@@ -69,6 +69,8 @@ namespace SkyGate.Music
 
         public int BPM => _currentSong.BPM;
 
+        public bool IsSongSet => _currentSong != null;
+
         /// <summary>
         /// Save song data to persistent storage
         /// </summary>
