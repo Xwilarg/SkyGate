@@ -10,7 +10,7 @@ namespace SkyGate.Game
         public static GridManager Instance { get; private set; }
 
         [SerializeReference]
-        private GameObject _horizontalLinePrefab;
+        private GameObject _horizontalLinePrefab, _lightHorizontalLinePrefab;
 
         [SerializeField]
         private Transform _gridContainer;
@@ -34,6 +34,13 @@ namespace SkyGate.Game
                 var go = Instantiate(_horizontalLinePrefab, _gridContainer);
                 ((RectTransform)go.transform).anchoredPosition = new Vector2(0f, i * MusicManager.Instance.BPM);
                 _horizontalLines.Add(go.transform);
+
+                for (int j = 0; j < 3; j++)
+                {
+                    var goLight = Instantiate(_lightHorizontalLinePrefab, _gridContainer);
+                    ((RectTransform)goLight.transform).anchoredPosition = new Vector2(0f, (i * MusicManager.Instance.BPM) + ((j + 1) * MusicManager.Instance.BPM / 4f));
+                    _horizontalLines.Add(goLight.transform);
+                }
             }
         }
 
@@ -48,7 +55,7 @@ namespace SkyGate.Game
                     rTransform.anchoredPosition = new Vector2(0f, rTransform.anchoredPosition.y - (Time.deltaTime * MusicManager.Instance.BPM));
                     if (rTransform.anchoredPosition.y < 0f)
                     {
-                        rTransform.anchoredPosition = new(0f, ((RectTransform)previous.transform).anchoredPosition.y + MusicManager.Instance.BPM);
+                        rTransform.anchoredPosition = new(0f, ((RectTransform)previous.transform).anchoredPosition.y + MusicManager.Instance.BPM / 4f);
                     }
                 }
             }

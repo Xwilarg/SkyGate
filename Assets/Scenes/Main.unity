@@ -2766,6 +2766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _horizontalLinePrefab: {fileID: 4562274137019999300, guid: 57764582617d0884285ad71ee46b2df3, type: 3}
+  _lightHorizontalLinePrefab: {fileID: 5481095729714381814, guid: f1f76225b16e73844a88dcb3bfb9aea9, type: 3}
   _gridContainer: {fileID: 1912741031}
 --- !u!1 &1134355005
 GameObject:
