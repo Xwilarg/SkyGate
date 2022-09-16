@@ -1,8 +1,10 @@
+using SkyGate.Game;
 using SkyGate.Music;
 using System.Collections;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace SkyGate.SongEditor
 {
@@ -90,6 +92,15 @@ namespace SkyGate.SongEditor
             if (newValue > 0)
             {
                 MusicManager.Instance.UpdateBPM(newValue);
+            }
+        }
+
+        public void OnClick(InputAction.CallbackContext value)
+        {
+            if (value.performed)
+            {
+                var mousePos = Mouse.current.position.ReadValue();
+                Debug.Log($"Line pressed: {PlayerController.Instance.GetLine(mousePos.x)}");
             }
         }
     }
