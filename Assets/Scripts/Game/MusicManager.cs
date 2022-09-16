@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -24,11 +25,15 @@ namespace SkyGate.Game
 
         private IEnumerator LoadSongInternal(string path)
         {
-            using UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip($"file://{path}", AudioType.AUDIOQUEUE);
+            using UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip($"file://{path}", Path.GetExtension(path)[1..] switch
+            {
+                "mp3" => AudioType.MPEG,
+                "wav" => AudioType.WAV,
+                _=> throw new System.Exception($"Invalid format {Path.GetExtension(path)[1..]}")
+            });
             yield return req.SendWebRequest();
             if (req.responseCode == 200)
             {
-                Debug.Log("Song loaded");
                 _player.clip = DownloadHandlerAudioClip.GetContent(req);
                 _player.Play();
             }
