@@ -16,6 +16,7 @@ namespace SkyGate.Game
         private Transform _gridContainer;
 
         private readonly List<Transform> _horizontalLines = new();
+        private readonly List<Transform> _notes = new();
 
         private void Awake()
         {
@@ -24,11 +25,19 @@ namespace SkyGate.Game
 
         public void ResetGrid()
         {
+            // Clean
             foreach (var line in _horizontalLines)
             {
                 Destroy(line.gameObject);
             }
             _horizontalLines.Clear();
+            foreach (var line in _notes)
+            {
+                Destroy(line.gameObject);
+            }
+            _notes.Clear();
+
+            // Spawn horizontal lines
             for (int i = 0; i < (Screen.height / MusicManager.Instance.BPM) + MusicManager.Instance.BPM; i++)
             {
                 var go = Instantiate(_horizontalLinePrefab, _gridContainer);

@@ -30,6 +30,8 @@ namespace SkyGate.Game
             return -1;
         }
 
+        public float LineWidth => ((RectTransform)_lines[0].transform).sizeDelta.x;
+
         private void PressLine(InputAction.CallbackContext value, int id)
         {
             if (value.phase == InputActionPhase.Started)
