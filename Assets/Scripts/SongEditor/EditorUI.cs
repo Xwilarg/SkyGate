@@ -26,11 +26,17 @@ namespace SkyGate.SongEditor
             _songDataCategory.SetActive(false);
         }
 
+        private string AddZero(int value)
+            => (value < 10 ? "0" : "") + value;
+
+        private string FormatTime(float time)
+            => $"{(int)(time / 60f)}:{AddZero((int)(time % 60))}";
+
         private void Update()
         {
             if (MusicManager.Instance.IsPlaying)
             {
-                _duration.text = $"{MusicManager.Instance.TimeElapsed:0.00} / {MusicManager.Instance.SongDuration:0.00}";
+                _duration.text = $"{FormatTime(MusicManager.Instance.TimeElapsed)} / {FormatTime(MusicManager.Instance.SongDuration)}";
             }
         }
 
