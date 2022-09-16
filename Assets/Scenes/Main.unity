@@ -3223,6 +3223,7 @@ MonoBehaviour:
   - {fileID: 1183146547}
   _horizontalLinePrefab: {fileID: 4562274137019999300, guid: 57764582617d0884285ad71ee46b2df3, type: 3}
   _lightHorizontalLinePrefab: {fileID: 5481095729714381814, guid: f1f76225b16e73844a88dcb3bfb9aea9, type: 3}
+  _notePrefab: {fileID: 3279377182217211065, guid: 12024428d47259c40930db9ae27cf2f8, type: 3}
   _gridContainer: {fileID: 1912741031}
 --- !u!1 &1134355005
 GameObject:

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -58,14 +59,26 @@ namespace SkyGate.Music
         public void Stop()
         {
             _player.Stop();
+            GridManager.Instance.ResetGrid();
         }
 
         public void UpdateBPM(int newValue)
         {
             _currentSong.BPM = newValue;
             Stop();
+        }
+
+        public void AddNote(NoteData note)
+        {
+            if (_currentSong.Notes.Any(x => x.Y == note.Y && x.Line == note.Line))
+            {
+                return;
+            }
+            _currentSong.Notes.Add(note);
             GridManager.Instance.ResetGrid();
         }
+
+        public IReadOnlyList<NoteData> Notes => _currentSong.Notes.AsReadOnly();
 
         public int BPM => _currentSong.BPM;
 

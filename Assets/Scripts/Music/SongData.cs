@@ -14,7 +14,7 @@ namespace SkyGate.Music
             BPM = bpm;
             _currentPath = currentPath;
             MusicFileExtension = musicFileExtension;
-            _notes = notes.ToList();
+            Notes = notes.ToList();
         }
 
         public static SongData FromMusicFile(FileInfo file)
@@ -84,8 +84,8 @@ namespace SkyGate.Music
             writer.Write(Name);
             writer.Write(MusicFileExtension);
             writer.Write(BPM);
-            writer.Write(_notes.Count);
-            foreach (var note in _notes)
+            writer.Write(Notes.Count);
+            foreach (var note in Notes)
             {
                 writer.Write(note.Line);
                 writer.Write(note.Y);
@@ -103,7 +103,7 @@ namespace SkyGate.Music
         public string Name { private set; get; }
         public string MusicFileExtension { private set; get; }
         private string _currentPath;
-        private List<NoteData> _notes;
+        public List<NoteData> Notes { private set; get; }
 
         private const byte _version = 1;
     }
