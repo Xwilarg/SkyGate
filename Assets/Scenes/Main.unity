@@ -2997,7 +2997,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1134346548}
   - component: {fileID: 1134346549}
-  - component: {fileID: 1134346550}
   - component: {fileID: 1134346551}
   m_Layer: 0
   m_Name: GameManager
@@ -3048,8 +3047,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1134346550}
-        m_TargetAssemblyTypeName: SkyGate.PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1134346551}
+        m_TargetAssemblyTypeName: SkyGate.Game.GridManager, Assembly-CSharp
         m_MethodName: OnFirstLine
         m_Mode: 0
         m_Arguments:
@@ -3104,8 +3103,8 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1134346550}
-        m_TargetAssemblyTypeName: SkyGate.Game.PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1134346551}
+        m_TargetAssemblyTypeName: SkyGate.Game.GridManager, Assembly-CSharp
         m_MethodName: OnSecondLine
         m_Mode: 0
         m_Arguments:
@@ -3120,8 +3119,8 @@ MonoBehaviour:
     m_ActionName: Player/SecondLine[/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1134346550}
-        m_TargetAssemblyTypeName: SkyGate.Game.PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1134346551}
+        m_TargetAssemblyTypeName: SkyGate.Game.GridManager, Assembly-CSharp
         m_MethodName: OnThirdLine
         m_Mode: 0
         m_Arguments:
@@ -3136,8 +3135,8 @@ MonoBehaviour:
     m_ActionName: Player/ThirdLine[/Keyboard/f]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1134346550}
-        m_TargetAssemblyTypeName: SkyGate.Game.PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1134346551}
+        m_TargetAssemblyTypeName: SkyGate.Game.GridManager, Assembly-CSharp
         m_MethodName: OnFourthLine
         m_Mode: 0
         m_Arguments:
@@ -3152,8 +3151,8 @@ MonoBehaviour:
     m_ActionName: Player/FourthLine[/Keyboard/j]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1134346550}
-        m_TargetAssemblyTypeName: SkyGate.Game.PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1134346551}
+        m_TargetAssemblyTypeName: SkyGate.Game.GridManager, Assembly-CSharp
         m_MethodName: OnFifthLine
         m_Mode: 0
         m_Arguments:
@@ -3168,8 +3167,8 @@ MonoBehaviour:
     m_ActionName: Player/FifthLine[/Keyboard/k]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1134346550}
-        m_TargetAssemblyTypeName: SkyGate.Game.PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1134346551}
+        m_TargetAssemblyTypeName: SkyGate.Game.GridManager, Assembly-CSharp
         m_MethodName: OnSixthLine
         m_Mode: 0
         m_Arguments:
@@ -3203,25 +3202,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1134346550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1134346547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86eae74354ebb7245abfbf4520a389d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lines:
-  - {fileID: 1987500468}
-  - {fileID: 1660155961}
-  - {fileID: 260740895}
-  - {fileID: 682209956}
-  - {fileID: 694744713}
-  - {fileID: 1183146547}
 --- !u!114 &1134346551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3234,6 +3214,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f81751c3070d6f44980834d13e35e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lines:
+  - {fileID: 4973928947768653943}
+  - {fileID: 1660155961}
+  - {fileID: 260740895}
+  - {fileID: 682209956}
+  - {fileID: 694744713}
+  - {fileID: 1183146547}
   _horizontalLinePrefab: {fileID: 4562274137019999300, guid: 57764582617d0884285ad71ee46b2df3, type: 3}
   _lightHorizontalLinePrefab: {fileID: 5481095729714381814, guid: f1f76225b16e73844a88dcb3bfb9aea9, type: 3}
   _gridContainer: {fileID: 1912741031}
@@ -4843,17 +4830,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4973928946392277447, guid: 4b994f6bf93275f4fb6558dc00c2ceee, type: 3}
   m_PrefabInstance: {fileID: 4973928947768653942}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1987500468 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4973928946392277442, guid: 4b994f6bf93275f4fb6558dc00c2ceee, type: 3}
-  m_PrefabInstance: {fileID: 4973928947768653942}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6c2601e8d5c33243802e371a8ce2b29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2129138322
 GameObject:
   m_ObjectHideFlags: 0
@@ -5135,3 +5111,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b994f6bf93275f4fb6558dc00c2ceee, type: 3}
+--- !u!114 &4973928947768653943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4973928946392277442, guid: 4b994f6bf93275f4fb6558dc00c2ceee, type: 3}
+  m_PrefabInstance: {fileID: 4973928947768653942}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6c2601e8d5c33243802e371a8ce2b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

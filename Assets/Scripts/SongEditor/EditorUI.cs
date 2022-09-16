@@ -100,7 +100,7 @@ namespace SkyGate.SongEditor
             if (value.performed && MusicManager.Instance.IsSongSet)
             {
                 var mousePos = Mouse.current.position.ReadValue();
-                Debug.Log($"Line pressed: {PlayerController.Instance.GetLine(mousePos.x)} ; {GridManager.Instance.GetGridIndex(mousePos.y)}");
+                Debug.Log($"Line pressed: {GridManager.Instance.GetLine(mousePos.x)} ; {GridManager.Instance.GetGridIndex(mousePos.y)}");
             }
         }
     }
