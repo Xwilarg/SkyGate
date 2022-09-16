@@ -66,6 +66,7 @@ namespace SkyGate.Game
                     var noteRT = (RectTransform)noteGo.transform;
                     noteRT.sizeDelta = new(noteRT.sizeDelta.x, MusicManager.Instance.BPM / 4f);
                     noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM);
+                    _notes.Add(noteRT);
                 }
             }
         }
@@ -79,17 +80,22 @@ namespace SkyGate.Game
                     var previous = i == 0 ? _horizontalLines.Last() : _horizontalLines[i - 1];
                     var rTransform = _horizontalLines[i];
                     rTransform.anchoredPosition = new(0f, rTransform.anchoredPosition.y - (Time.deltaTime * MusicManager.Instance.BPM));
-                    if (rTransform.anchoredPosition.y < 0f)
+                    if (rTransform.anchoredPosition.y < 0f) // We move the line back to the top
                     {
                         rTransform.anchoredPosition = new(0f, ((RectTransform)previous.transform).anchoredPosition.y + MusicManager.Instance.BPM / 4f);
                     }
                 }
 
-                foreach (var note in _notes)
+                for (int i = _notes.Count - 1; i >= 0; i--)
                 {
+                    var note = _notes[i];
                     note.anchoredPosition = new(0f, note.anchoredPosition.y - (Time.deltaTime * MusicManager.Instance.BPM));
+                    if (note.anchoredPosition.x < 0f)
+                    {
+                        Destroy(note.gameObject);
+                        _notes.RemoveAt(i);
+                    }
                 }
-                _notes.RemoveAll(x => x.anchoredPosition.y < 0f);
             }
         }
 
