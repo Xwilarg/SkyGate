@@ -28,7 +28,7 @@ namespace SkyGate.SongEditor
 
         private void Update()
         {
-            if (MusicManager.Instance.CurrentSong != null)
+            if (MusicManager.Instance.IsPlaying)
             {
                 _duration.text = $"{MusicManager.Instance.TimeElapsed:0.00} / {MusicManager.Instance.SongDuration:0.00}";
             }
@@ -43,12 +43,11 @@ namespace SkyGate.SongEditor
                 var ext = file.Extension[1..];
                 if (ext == "bin") // Binary file, contains data about a song
                 {
-                    MusicManager.Instance.LoadSong(SongData.FromGameFile(file));
-                    LoadMetadata(MusicManager.Instance.CurrentSong);
+                    StartCoroutine(LoadSongInternal(SongData.FromGameFile(file)));
                 }
                 else if (MusicManager.Instance.IsExtensionAllowed(ext)) // Path to a music file, create a new song project
                 {
-                    StartCoroutine(LoadSongInternal(file));
+                    StartCoroutine(LoadSongInternal(SongData.FromMusicFile(file)));
                 }
                 else
                 {
@@ -61,10 +60,10 @@ namespace SkyGate.SongEditor
             }
         }
 
-        private IEnumerator LoadSongInternal(FileInfo file)
+        private IEnumerator LoadSongInternal(SongData songData)
         {
-            yield return MusicManager.Instance.LoadSong(file);
-            LoadMetadata(MusicManager.Instance.CurrentSong);
+            yield return MusicManager.Instance.LoadSong(songData);
+            LoadMetadata(songData);
         }
 
         public void SaveSong()

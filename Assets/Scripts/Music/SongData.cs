@@ -11,7 +11,7 @@ namespace SkyGate.Music
             Name = name;
             BPM = bpm;
             _currentPath = currentPath;
-            _musicFileExtension = musicFileExtension;
+            MusicFileExtension = musicFileExtension;
         }
 
         public static SongData FromMusicFile(FileInfo file)
@@ -67,7 +67,7 @@ namespace SkyGate.Music
 
             writer.Write(_version);
             writer.Write(Name);
-            writer.Write(_musicFileExtension);
+            writer.Write(MusicFileExtension);
             writer.Write(BPM);
 
             writer.Flush();
@@ -76,9 +76,11 @@ namespace SkyGate.Music
             Debug.Log($"File saved to {savePath}");
         }
 
+        public string AudioClipPath => $"{_currentPath}/song.{MusicFileExtension}";
+
         public int BPM { private set; get; }
         public string Name { private set; get; }
-        public string _musicFileExtension { private set; get; }
+        public string MusicFileExtension { private set; get; }
         private string _currentPath;
 
         private const byte _version = 1;

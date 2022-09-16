@@ -14,7 +14,7 @@ namespace SkyGate.Music
         [SerializeField]
         private AudioSource _player;
 
-        public SongData CurrentSong { get; private set; }
+        public SongData CurrentSong { get; set; }
 
         /// <summary>
         /// Is the Audio Source currently playing
@@ -41,17 +41,12 @@ namespace SkyGate.Music
             Instance = this;
         }
 
-        private void Update()
-        {
-            if (!_player.isPlaying && _player.clip != null && _player.clip.loadState == AudioDataLoadState.Loaded)
-            {
-                _player.Play();
-            }
-        }
-
         public void Play()
         {
-            _player.Play();
+            if (!_player.isPlaying)
+            {
+                _player.UnPause();
+            }
         }
 
         public void Pause()
@@ -69,19 +64,15 @@ namespace SkyGate.Music
             CurrentSong.Save();
         }
 
-        public void LoadSong(SongData data)
+        public IEnumerator LoadSong(SongData songData)
         {
-            CurrentSong = data;
-        }
-
-        public IEnumerator LoadSong(FileInfo file)
-        {
-            using UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip($"file://{file.FullName}", _extensionMapping[file.Extension[1..]]);
+            CurrentSong = songData;
+            using UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip($"file://{songData.AudioClipPath}", _extensionMapping[songData.MusicFileExtension]);
             yield return req.SendWebRequest();
             if (req.responseCode == 200)
             {
                 _player.clip = DownloadHandlerAudioClip.GetContent(req);
-                CurrentSong = SongData.FromMusicFile(file);
+                _player.Play();
             }
             else
             {
