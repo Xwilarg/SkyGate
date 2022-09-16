@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace SkyGate
+namespace SkyGate.Game
 {
     public class PlayerController : MonoBehaviour
     {

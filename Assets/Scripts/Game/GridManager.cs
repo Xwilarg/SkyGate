@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SkyGate
+namespace SkyGate.Game
 {
     public class GridManager : MonoBehaviour
     {

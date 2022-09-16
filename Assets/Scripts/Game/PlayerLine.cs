@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SkyGate
+namespace SkyGate.Game
 {
     public class PlayerLine : MonoBehaviour
     {

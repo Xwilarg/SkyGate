@@ -2,7 +2,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 
-namespace SkyGate
+namespace SkyGate.SongEditor
 {
     public class EditorUI : MonoBehaviour
     {
