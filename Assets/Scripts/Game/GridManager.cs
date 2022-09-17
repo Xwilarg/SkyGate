@@ -44,19 +44,23 @@ namespace SkyGate.Game
             }
             _notes.Clear();
 
+            var timeElapsed = MusicManager.Instance.TimeElapsed; // Time elapsed since the start of the song
+            var globalTime = timeElapsed * MusicManager.Instance.BPM; // Total scroll to go to the current song position
+            var relativeTime = globalTime % MusicManager.Instance.BPM; // Relative position
+
             // Spawn horizontal lines
             for (int i = 0; i < (Screen.height / MusicManager.Instance.BPM) + MusicManager.Instance.BPM; i++)
             {
                 var go = Instantiate(_horizontalLinePrefab, _gridContainer);
                 var goRT = (RectTransform)go.transform;
-                goRT.anchoredPosition = new Vector2(0f, i * MusicManager.Instance.BPM);
+                goRT.anchoredPosition = new Vector2(0f, i * MusicManager.Instance.BPM - relativeTime);
                 _horizontalLines.Add(goRT);
 
                 for (int j = 0; j < 3; j++)
                 {
                     var goLight = Instantiate(_lightHorizontalLinePrefab, _gridContainer);
                     var goLightRT = (RectTransform)goLight.transform;
-                    goLightRT.anchoredPosition = new Vector2(0f, (i * MusicManager.Instance.BPM) + ((j + 1) * MusicManager.Instance.BPM / 4f));
+                    goLightRT.anchoredPosition = new Vector2(0f, (i * MusicManager.Instance.BPM) + ((j + 1) * MusicManager.Instance.BPM / 4f) - relativeTime);
                     _horizontalLines.Add(goLightRT);
                 }
 
@@ -65,7 +69,7 @@ namespace SkyGate.Game
                     var noteGo = Instantiate(_notePrefab, _lines[note.Line].transform);
                     var noteRT = (RectTransform)noteGo.transform;
                     noteRT.sizeDelta = new(noteRT.sizeDelta.x, MusicManager.Instance.BPM / 4f);
-                    noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM);
+                    noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - globalTime);
                     _notes.Add(noteRT);
                 }
             }
