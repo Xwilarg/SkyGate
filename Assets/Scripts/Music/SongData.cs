@@ -43,6 +43,7 @@ namespace SkyGate.Music
                 Directory.CreateDirectory(path);
             }
             File.Copy(file.FullName, $"{path}/song.{extension}");
+            Save();
 
             return songData;
         }
