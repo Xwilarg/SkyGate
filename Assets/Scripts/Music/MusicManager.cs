@@ -45,10 +45,7 @@ namespace SkyGate.Music
 
         public void Play()
         {
-            if (!_player.isPlaying)
-            {
-                _player.Play();
-            }
+            _player.Play();
         }
 
         public void Pause()
@@ -59,6 +56,21 @@ namespace SkyGate.Music
         public void Stop()
         {
             _player.Stop();
+            GridManager.Instance.ResetGrid();
+        }
+
+        public void Move(float value)
+        {
+            var nextValue = _player.time + value;
+            if (nextValue < 0f)
+            {
+                nextValue = 0f;
+            }
+            else if (nextValue > SongDuration)
+            {
+                nextValue = SongDuration;
+            }
+            _player.time = nextValue;
             GridManager.Instance.ResetGrid();
         }
 
@@ -87,7 +99,7 @@ namespace SkyGate.Music
 
         public int BPM => _currentSong.BPM;
 
-        public bool IsSongSet => _currentSong != null;
+        public bool IsSongSet => _player.clip != null;
 
         /// <summary>
         /// Save song data to persistent storage

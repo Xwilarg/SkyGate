@@ -36,7 +36,7 @@ namespace SkyGate.SongEditor
 
         private void Update()
         {
-            if (MusicManager.Instance.IsPlaying)
+            if (MusicManager.Instance.IsSongSet)
             {
                 _duration.text = $"{FormatTime(MusicManager.Instance.TimeElapsed)} / {FormatTime(MusicManager.Instance.SongDuration)}";
             }
@@ -107,6 +107,37 @@ namespace SkyGate.SongEditor
 
                     MusicManager.Instance.ToggleNote(new NoteData() { Line = line, Y = y });
                 }
+            }
+        }
+
+        public void OnPause(InputAction.CallbackContext value)
+        {
+            if (value.performed)
+            {
+                if (MusicManager.Instance.IsPlaying)
+                {
+                    MusicManager.Instance.Pause();
+                }
+                else
+                {
+                    MusicManager.Instance.Play();
+                }
+            }
+        }
+
+        public void OnBackward(InputAction.CallbackContext value)
+        {
+            if (value.performed)
+            {
+                MusicManager.Instance.Move(-1f);
+            }
+        }
+
+        public void OnForeward(InputAction.CallbackContext value)
+        {
+            if (value.performed)
+            {
+                MusicManager.Instance.Move(1f);
             }
         }
     }

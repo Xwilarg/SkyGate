@@ -3197,6 +3197,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 2d1691f6-efe4-4ffd-9668-36a95239ddb2
     m_ActionName: Player/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1595738600}
+        m_TargetAssemblyTypeName: SkyGate.SongEditor.EditorUI, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 145f82ee-126c-496a-8380-70876632516b
+    m_ActionName: Player/EDITOR_Pause[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1595738600}
+        m_TargetAssemblyTypeName: SkyGate.SongEditor.EditorUI, Assembly-CSharp
+        m_MethodName: OnBackward
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 838adf9a-f9c4-416f-bb61-96030d09e6de
+    m_ActionName: Player/EDITOR_Backward[/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1595738600}
+        m_TargetAssemblyTypeName: SkyGate.SongEditor.EditorUI, Assembly-CSharp
+        m_MethodName: OnForeward
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ea48de25-bc83-45aa-b9f5-ccb3586fe13a
+    m_ActionName: Player/EDITOR_Foreward[/Keyboard/rightArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
