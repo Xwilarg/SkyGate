@@ -64,13 +64,21 @@ namespace SkyGate.Music
             var nextValue = _player.time + value;
             if (nextValue < 0f)
             {
-                nextValue = 0f;
+                SetValue(0f);
             }
             else if (nextValue > SongDuration)
             {
-                nextValue = SongDuration;
+                SetValue(SongDuration);
             }
-            _player.time = nextValue;
+            else
+            {
+                SetValue(nextValue);
+            }
+        }
+
+        public void SetValue(float value)
+        {
+            _player.time = value;
             GridManager.Instance.ResetGrid();
         }
 

@@ -5,6 +5,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace SkyGate.SongEditor
 {
@@ -23,6 +24,9 @@ namespace SkyGate.SongEditor
         [SerializeField]
         private TMP_Text _duration;
 
+        [SerializeField]
+        private Scrollbar _progression;
+
         private void Awake()
         {
             _songDataCategory.SetActive(false);
@@ -39,6 +43,7 @@ namespace SkyGate.SongEditor
             if (MusicManager.Instance.IsSongSet)
             {
                 _duration.text = $"{FormatTime(MusicManager.Instance.TimeElapsed)} / {FormatTime(MusicManager.Instance.SongDuration)}";
+                _progression.value = MusicManager.Instance.TimeElapsed / MusicManager.Instance.SongDuration;
             }
         }
 
