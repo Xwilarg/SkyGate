@@ -5272,8 +5272,8 @@ MonoBehaviour:
   _filePath: {fileID: 688038922}
   _songDataCategory: {fileID: 1823124178}
   _songName: {fileID: 2129138324}
-  _songAuthor: {fileID: 2129138324}
-  _mapAuthor: {fileID: 2076166729}
+  _songAuthor: {fileID: 2076166729}
+  _mapAuthor: {fileID: 1255938274}
   _bpm: {fileID: 621238226}
   _duration: {fileID: 763446597}
   _progression: {fileID: 103464309}
