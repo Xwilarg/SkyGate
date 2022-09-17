@@ -31,9 +31,29 @@ namespace SkyGate.SongEditor
         [SerializeField]
         private Scrollbar _progression;
 
+        [SerializeField]
+        private Transform _fileExplorerContainer;
+        [SerializeField]
+        private GameObject _fileExplorerPrefab;
+
         private void Awake()
         {
             _songDataCategory.SetActive(false);
+
+            if (Directory.Exists($"{Application.persistentDataPath}/Songs"))
+            {
+                foreach (var folder in Directory.GetDirectories($"{Application.persistentDataPath}/Songs"))
+                {
+                    var button = Instantiate(_fileExplorerPrefab, _fileExplorerContainer);
+                    var dataPath = $"{folder}/data.bin";
+                    var song = SongData.FromGameFile(new FileInfo(dataPath));
+                    button.GetComponentInChildren<TMP_Text>().text = $"{song.Name}\nBy {song.MusicAuthor}";
+                    button.GetComponent<Button>().onClick.AddListener(new(() =>
+                    {
+                        LoadSongFromFile(dataPath);
+                    }));
+                }
+            }
         }
 
         private string AddZero(int value)
@@ -53,7 +73,12 @@ namespace SkyGate.SongEditor
 
         public void LoadSong()
         {
-            var path = _filePath.text;
+            LoadSongFromFile(_filePath.text);
+            
+        }
+
+        private void LoadSongFromFile(string path)
+        {
             if (File.Exists(path))
             {
                 var file = new FileInfo(path);
