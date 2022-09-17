@@ -104,6 +104,7 @@ namespace SkyGate.SongEditor
                 if (line != -1)
                 {
                     var y = GridManager.Instance.GetGridIndex(mousePos.y);
+
                     MusicManager.Instance.ToggleNote(new NoteData() { Line = line, Y = y });
                 }
             }

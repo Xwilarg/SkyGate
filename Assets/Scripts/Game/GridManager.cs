@@ -105,7 +105,12 @@ namespace SkyGate.Game
 
         public float GetGridIndex(float y)
         {
-            return Mathf.Floor(y / MusicManager.Instance.BPM * 4f) / 4f;
+
+            var timeElapsed = MusicManager.Instance.TimeElapsed; // Time elapsed since the start of the song
+            var globalTime = timeElapsed * MusicManager.Instance.BPM; // Total scroll to go to the current song position
+            var relativeTime = globalTime % MusicManager.Instance.BPM; // Relative position
+
+            return Mathf.Floor((y + globalTime) / MusicManager.Instance.BPM * 4f) / 4f;
         }
 
         public int GetLine(float x)

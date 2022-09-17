@@ -73,10 +73,12 @@ namespace SkyGate.Music
             if (_currentSong.Notes.Any(x => x.Y == note.Y && x.Line == note.Line))
             {
                 _currentSong.Notes.RemoveAll(x => x.Y == note.Y && x.Line == note.Line);
+                Debug.Log($"Removed note at {note.Line} ; {note.Y}");
             }
             else
             {
                 _currentSong.Notes.Add(note);
+                Debug.Log($"Added note at {note.Line} ; {note.Y}");
             }
             GridManager.Instance.ResetGrid();
         }
