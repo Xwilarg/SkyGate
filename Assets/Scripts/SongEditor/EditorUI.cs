@@ -20,6 +20,10 @@ namespace SkyGate.SongEditor
         [SerializeField]
         private TMP_InputField _songName;
         [SerializeField]
+        private TMP_InputField _songAuthor;
+        [SerializeField]
+        private TMP_InputField _mapAuthor;
+        [SerializeField]
         private TMP_InputField _bpm;
         [SerializeField]
         private TMP_Text _duration;
@@ -81,6 +85,7 @@ namespace SkyGate.SongEditor
 
         public void SaveSong()
         {
+            MusicManager.Instance.EditMetadata(_songName.text, _songAuthor.text, _mapAuthor.text);
             MusicManager.Instance.SaveSong();
         }
 
@@ -88,6 +93,8 @@ namespace SkyGate.SongEditor
         {
             _songDataCategory.SetActive(true);
             _songName.text = song.Name;
+            _songAuthor.text = song.MusicAuthor;
+            _mapAuthor.text = song.MapAuthor;
             _bpm.text = song.BPM.ToString();
         }
 

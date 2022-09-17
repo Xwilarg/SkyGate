@@ -117,6 +117,13 @@ namespace SkyGate.Music
             _currentSong.Save();
         }
 
+        public void EditMetadata(string name, string musicAuthor, string mapAuthor)
+        {
+            _currentSong.Name = name;
+            _currentSong.MusicAuthor = musicAuthor;
+            _currentSong.MapAuthor = mapAuthor;
+        }
+
         /// <summary>
         /// Load a song into the game and start playing it
         /// </summary>

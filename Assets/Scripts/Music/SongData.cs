@@ -8,9 +8,11 @@ namespace SkyGate.Music
 {
     public class SongData
     {
-        private SongData(string name, int bpm, string currentPath, string musicFileExtension, NoteData[] notes)
+        private SongData(string name, string musicAuthor, string mapAuthor, int bpm, string currentPath, string musicFileExtension, NoteData[] notes)
         {
             Name = name;
+            MusicAuthor = musicAuthor;
+            MapAuthor = mapAuthor;
             BPM = bpm;
             _currentPath = currentPath;
             MusicFileExtension = musicFileExtension;
@@ -25,6 +27,8 @@ namespace SkyGate.Music
             var songData = new SongData(
                 name: targetName,
                 bpm: 200,
+                musicAuthor: string.Empty,
+                mapAuthor: string.Empty,
                 currentPath: path,
                 musicFileExtension: extension,
                 notes: Array.Empty<NoteData>()
@@ -51,6 +55,8 @@ namespace SkyGate.Music
             reader.ReadByte(); // Version
             string name = reader.ReadString();
             string extension = reader.ReadString();
+            string musicAuthor = reader.ReadString();
+            string mapAuthor = reader.ReadString();
             int bpm = reader.ReadInt32();
             var notesCount = reader.ReadInt32();
             var notes = new NoteData[notesCount];
@@ -67,6 +73,8 @@ namespace SkyGate.Music
             fi.Close();
             return new SongData(
                 name: name,
+                musicAuthor: musicAuthor,
+                mapAuthor: mapAuthor,
                 bpm: bpm,
                 currentPath: file.Directory.FullName,
                 musicFileExtension: extension,
@@ -83,6 +91,8 @@ namespace SkyGate.Music
             writer.Write(_version);
             writer.Write(Name);
             writer.Write(MusicFileExtension);
+            writer.Write(MusicAuthor);
+            writer.Write(MapAuthor);
             writer.Write(BPM);
             writer.Write(Notes.Count);
             foreach (var note in Notes)
@@ -100,7 +110,9 @@ namespace SkyGate.Music
         public string AudioClipPath => $"{_currentPath}/song.{MusicFileExtension}";
 
         public int BPM { set; get; }
-        public string Name { private set; get; }
+        public string Name { set; get; }
+        public string MusicAuthor { set; get; }
+        public string MapAuthor { set; get; }
         public string MusicFileExtension { private set; get; }
         private string _currentPath;
         public List<NoteData> Notes { private set; get; }
