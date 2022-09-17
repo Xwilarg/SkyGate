@@ -68,13 +68,16 @@ namespace SkyGate.Music
             Stop();
         }
 
-        public void AddNote(NoteData note)
+        public void ToggleNote(NoteData note)
         {
             if (_currentSong.Notes.Any(x => x.Y == note.Y && x.Line == note.Line))
             {
-                return;
+                _currentSong.Notes.RemoveAll(x => x.Y == note.Y && x.Line == note.Line);
             }
-            _currentSong.Notes.Add(note);
+            else
+            {
+                _currentSong.Notes.Add(note);
+            }
             GridManager.Instance.ResetGrid();
         }
 
