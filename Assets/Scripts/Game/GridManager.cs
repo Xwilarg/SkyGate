@@ -25,6 +25,8 @@ namespace SkyGate.Game
         private readonly List<RectTransform> _horizontalLines = new();
         private readonly List<RectTransform> _notes = new();
 
+        private const int _sublineCount = 8;
+
         private void Awake()
         {
             Instance = this;
@@ -56,11 +58,11 @@ namespace SkyGate.Game
                 goRT.anchoredPosition = new Vector2(0f, i * MusicManager.Instance.BPM - relativeTime);
                 _horizontalLines.Add(goRT);
 
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < _sublineCount - 1; j++)
                 {
                     var goLight = Instantiate(_lightHorizontalLinePrefab, _gridContainer);
                     var goLightRT = (RectTransform)goLight.transform;
-                    goLightRT.anchoredPosition = new Vector2(0f, (i * MusicManager.Instance.BPM) + ((j + 1) * MusicManager.Instance.BPM / 4f) - relativeTime);
+                    goLightRT.anchoredPosition = new Vector2(0f, (i * MusicManager.Instance.BPM) + ((j + 1) * MusicManager.Instance.BPM / _sublineCount) - relativeTime);
                     _horizontalLines.Add(goLightRT);
                 }
 
@@ -68,7 +70,7 @@ namespace SkyGate.Game
                 {
                     var noteGo = Instantiate(_notePrefab, _lines[note.Line].transform);
                     var noteRT = (RectTransform)noteGo.transform;
-                    noteRT.sizeDelta = new(noteRT.sizeDelta.x, MusicManager.Instance.BPM / 4f);
+                    noteRT.sizeDelta = new(noteRT.sizeDelta.x, MusicManager.Instance.BPM / _sublineCount);
                     noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - globalTime);
                     _notes.Add(noteRT);
                 }
@@ -86,7 +88,7 @@ namespace SkyGate.Game
                     rTransform.anchoredPosition = new(0f, rTransform.anchoredPosition.y - (Time.deltaTime * MusicManager.Instance.BPM));
                     if (rTransform.anchoredPosition.y < 0f) // We move the line back to the top
                     {
-                        rTransform.anchoredPosition = new(0f, ((RectTransform)previous.transform).anchoredPosition.y + MusicManager.Instance.BPM / 4f);
+                        rTransform.anchoredPosition = new(0f, ((RectTransform)previous.transform).anchoredPosition.y + MusicManager.Instance.BPM / _sublineCount);
                     }
                 }
 
@@ -108,7 +110,7 @@ namespace SkyGate.Game
             var timeElapsed = MusicManager.Instance.TimeElapsed; // Time elapsed since the start of the song
             var globalTime = timeElapsed * MusicManager.Instance.BPM; // Total scroll to go to the current song position
 
-            return Mathf.Floor((y + globalTime) / MusicManager.Instance.BPM * 4f) / 4f;
+            return Mathf.Floor((y + globalTime) / MusicManager.Instance.BPM * _sublineCount) / _sublineCount;
         }
 
         public int GetLine(float x)
