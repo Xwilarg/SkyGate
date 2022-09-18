@@ -166,7 +166,8 @@ namespace SkyGate.Game
                         _notes.RemoveAll(x => x.NoteData == targetNote.NoteData);
                     }
                 }
-                _sfxPlayer.PlayOneShot(_hitSound);
+                _sfxPlayer.clip = _hitSound;
+                _sfxPlayer.Play();
             }
             else if (value.phase == InputActionPhase.Canceled)
             {
