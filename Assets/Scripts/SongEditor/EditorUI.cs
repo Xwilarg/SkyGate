@@ -142,7 +142,7 @@ namespace SkyGate.SongEditor
                 {
                     var y = GridManager.Instance.GetGridIndex(mousePos.y);
 
-                    MusicManager.Instance.ToggleNote(new NoteData() { Line = line, Y = y });
+                    MusicManager.Instance.ToggleNote(new NoteData(line, y));
                 }
             }
         }

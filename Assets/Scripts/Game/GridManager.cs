@@ -163,7 +163,7 @@ namespace SkyGate.Game
                     if (score > 0)
                     {
                         Destroy(targetNote.RectTransform.gameObject);
-                        _notes.RemoveAll(x => x.NoteData.Line == targetNote.NoteData.Line && x.NoteData.Y == targetNote.NoteData.Y);
+                        _notes.RemoveAll(x => x.NoteData == targetNote.NoteData);
                     }
                 }
                 _sfxPlayer.PlayOneShot(_hitSound);

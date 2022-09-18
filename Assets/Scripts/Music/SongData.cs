@@ -63,11 +63,7 @@ namespace SkyGate.Music
             var notes = new NoteData[notesCount];
             for (int i = 0; i < notesCount; i++)
             {
-                notes[i] = new NoteData()
-                {
-                    Line = reader.ReadInt32(),
-                    Y = reader.ReadSingle()
-                };
+                notes[i] = new NoteData(reader.ReadInt32(), reader.ReadSingle());
             }
 
             reader.Close();
