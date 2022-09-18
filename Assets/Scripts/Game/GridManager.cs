@@ -22,8 +22,14 @@ namespace SkyGate.Game
         [SerializeField]
         private Transform _gridContainer;
 
+        [SerializeField]
+        private AudioSource _sfxPlayer;
+
+        [SerializeField]
+        private AudioClip _hitSound;
+
         private readonly List<RectTransform> _horizontalLines = new();
-        private readonly List<RectTransform> _notes = new();
+        private readonly List<GridNoteData> _notes = new();
 
         private const int _sublineCount = 8;
 
@@ -42,7 +48,7 @@ namespace SkyGate.Game
             _horizontalLines.Clear();
             foreach (var line in _notes)
             {
-                Destroy(line.gameObject);
+                Destroy(line.RectTransform.gameObject);
             }
             _notes.Clear();
 
@@ -72,7 +78,7 @@ namespace SkyGate.Game
                     var noteRT = (RectTransform)noteGo.transform;
                     noteRT.sizeDelta = new(noteRT.sizeDelta.x, MusicManager.Instance.BPM / _sublineCount);
                     noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - globalTime);
-                    _notes.Add(noteRT);
+                    _notes.Add(new() { NoteData = note, RectTransform = noteRT });
                 }
             }
         }
@@ -94,7 +100,7 @@ namespace SkyGate.Game
 
                 for (int i = _notes.Count - 1; i >= 0; i--)
                 {
-                    var note = _notes[i];
+                    var note = _notes[i].RectTransform;
                     note.anchoredPosition = new(0f, note.anchoredPosition.y - (Time.deltaTime * MusicManager.Instance.BPM));
                     if (note.anchoredPosition.x < 0f)
                     {
@@ -135,6 +141,8 @@ namespace SkyGate.Game
             if (value.phase == InputActionPhase.Started)
             {
                 _lines[id].ShowMark(true);
+                var targetNote = _notes.Where(x => x.NoteData.Line == id).OrderBy(x => x.NoteData.Y).First();
+                Debug.Log($"{((RectTransform)_lines[id].transform).anchoredPosition.y} / {targetNote.RectTransform.anchoredPosition.y}");
             }
             else if (value.phase == InputActionPhase.Canceled)
             {
