@@ -73,15 +73,15 @@ namespace SkyGate.Game
                     goLightRT.anchoredPosition = new Vector2(0f, (i * MusicManager.Instance.BPM) + ((j + 1) * MusicManager.Instance.BPM / _sublineCount) - relativeTime);
                     _horizontalLines.Add(goLightRT);
                 }
+            }
 
-                foreach (var note in MusicManager.Instance.Notes)
-                {
-                    var noteGo = Instantiate(_notePrefab, _lines[note.Line].transform);
-                    var noteRT = (RectTransform)noteGo.transform;
-                    noteRT.sizeDelta = new(noteRT.sizeDelta.x, NoteSize);
-                    noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - globalTime);
-                    _notes.Add(new() { NoteData = note, RectTransform = noteRT });
-                }
+            foreach (var note in MusicManager.Instance.Notes)
+            {
+                var noteGo = Instantiate(_notePrefab, _lines[note.Line].transform);
+                var noteRT = (RectTransform)noteGo.transform;
+                noteRT.sizeDelta = new(noteRT.sizeDelta.x, NoteSize);
+                noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - globalTime);
+                _notes.Add(new() { NoteData = note, RectTransform = noteRT });
             }
         }
 
