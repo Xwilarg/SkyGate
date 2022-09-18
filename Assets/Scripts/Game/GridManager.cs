@@ -32,13 +32,12 @@ namespace SkyGate.Game
         private readonly List<GridNoteData> _notes = new();
 
         private const int _sublineCount = 8;
+        private const float _yNoteSize = 20f;
 
         private void Awake()
         {
             Instance = this;
         }
-
-        private float NoteSize => MusicManager.Instance.BPM / _sublineCount;
 
         public void ResetGrid()
         {
@@ -79,7 +78,7 @@ namespace SkyGate.Game
             {
                 var noteGo = Instantiate(_notePrefab, _lines[note.Line].transform);
                 var noteRT = (RectTransform)noteGo.transform;
-                noteRT.sizeDelta = new(noteRT.sizeDelta.x, NoteSize);
+                noteRT.sizeDelta = new(noteRT.sizeDelta.x, _yNoteSize);
                 noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - globalTime);
                 _notes.Add(new() { NoteData = note, RectTransform = noteRT });
             }
@@ -148,15 +147,15 @@ namespace SkyGate.Game
                 {
                     var distance = Mathf.Abs(targetNote.RectTransform.anchoredPosition.y - _lines[id].YPos);
                     int score = 0;
-                    if (distance < NoteSize)
+                    if (distance < _yNoteSize)
                     {
                         score = 100;
                     }
-                    else if (distance < NoteSize * 2f)
+                    else if (distance < _yNoteSize * 2f)
                     {
                         score = 50;
                     }
-                    else if (distance < NoteSize * 4f)
+                    else if (distance < _yNoteSize * 4f)
                     {
                         score = 25;
                     }
