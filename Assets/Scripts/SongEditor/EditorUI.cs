@@ -36,6 +36,11 @@ namespace SkyGate.SongEditor
         [SerializeField]
         private GameObject _fileExplorerPrefab;
 
+        [SerializeField]
+        private Transform _noteDetailsContainer;
+        [SerializeField]
+        private GameObject _noteDetailsPrefab;
+
         private void Awake()
         {
             _songDataCategory.SetActive(false);
@@ -54,6 +59,20 @@ namespace SkyGate.SongEditor
                     }));
                 }
             }
+        }
+
+        private void Start()
+        {
+            GridManager.Instance.OnGridReset.AddListener(new(() =>
+            {
+                for (int i = _noteDetailsContainer.childCount - 1; i >= 0; i--) Destroy(_noteDetailsContainer.GetChild(i).gameObject);
+
+                foreach (var note in GridManager.Instance.GetNotes())
+                {
+                    var go = Instantiate(_noteDetailsPrefab, _noteDetailsContainer);
+                    go.GetComponent<NoteEditorUI>().Init(note);
+                }
+            }));
         }
 
         private string AddZero(int value)

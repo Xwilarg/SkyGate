@@ -2,6 +2,7 @@ using SkyGate.Music;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace SkyGate.Game
@@ -34,6 +35,16 @@ namespace SkyGate.Game
         private const int _sublineCount = 8;
         private const float _yNoteSize = 20f;
 
+        public UnityEvent OnGridReset = new();
+
+        public IEnumerable<NoteData> GetNotes()
+        {
+            foreach (var note in _notes)
+            {
+                yield return note.NoteData;
+            }
+        }
+
         private void Awake()
         {
             Instance = this;
@@ -52,6 +63,8 @@ namespace SkyGate.Game
                 Destroy(line.RectTransform.gameObject);
             }
             _notes.Clear();
+
+            NoteData.ID = 0;
 
             var timeElapsed = MusicManager.Instance.TimeElapsed; // Time elapsed since the start of the song
             var globalTime = timeElapsed * MusicManager.Instance.BPM; // Total scroll to go to the current song position
@@ -82,6 +95,8 @@ namespace SkyGate.Game
                 noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - globalTime);
                 _notes.Add(new() { NoteData = note, RectTransform = noteRT });
             }
+
+            OnGridReset.Invoke();
         }
 
         private void Update()

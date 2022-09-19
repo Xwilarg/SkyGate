@@ -13,7 +13,7 @@ namespace SkyGate.Music
 
         public int Line { private set; get; }
         public float Y { private set; get; }
-        private int _id;
+        public int _id { private set; get; }
 
         public static int ID = 0;
 
