@@ -66,8 +66,8 @@ namespace SkyGate.Game
             var noteData = _notes.FirstOrDefault(x => x.NoteData == note);
             if (noteData != null)
             {
-                noteData.RectTransform.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - GlobalTime);
                 noteData.RectTransform.SetParent(_lines[noteData.NoteData.Line].transform);
+                noteData.RectTransform.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - GlobalTime);
             }
             else
             {

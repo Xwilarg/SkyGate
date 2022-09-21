@@ -25,14 +25,20 @@ namespace SkyGate.SongEditor
 
         public void OnLineEdit(string value)
         {
-            _noteData.Line = int.Parse(value);
-            GridManager.Instance.UpdatePosition(_noteData);
+            if (int.TryParse(value, out int parseValue))
+            {
+                _noteData.Line = parseValue;
+                GridManager.Instance.UpdatePosition(_noteData);
+            }
         }
 
         public void OnYEdit(string value)
         {
-            _noteData.Y = float.Parse(value);
-            GridManager.Instance.UpdatePosition(_noteData);
+            if (float.TryParse(value, out float parseValue))
+            {
+                _noteData.Y = parseValue;
+                GridManager.Instance.UpdatePosition(_noteData);
+            }
         }
     }
 }
