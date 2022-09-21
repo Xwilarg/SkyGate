@@ -37,6 +37,8 @@ namespace SkyGate.Game
 
         public UnityEvent OnGridReset = new();
 
+        private float GlobalTime => MusicManager.Instance.TimeElapsed * MusicManager.Instance.BPM;
+
         public IEnumerable<NoteData> GetNotes()
         {
             foreach (var note in _notes)
@@ -48,6 +50,29 @@ namespace SkyGate.Game
         private void Awake()
         {
             Instance = this;
+        }
+
+        private void SpawnNote(NoteData note)
+        {
+            var noteGo = Instantiate(_notePrefab, _lines[note.Line].transform);
+            var noteRT = (RectTransform)noteGo.transform;
+            noteRT.sizeDelta = new(noteRT.sizeDelta.x, _yNoteSize);
+            noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - GlobalTime);
+            _notes.Add(new() { NoteData = note, RectTransform = noteRT });
+        }
+
+        public void UpdatePosition(NoteData note)
+        {
+            var noteData = _notes.FirstOrDefault(x => x.NoteData == note);
+            if (noteData != null)
+            {
+                noteData.RectTransform.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - GlobalTime);
+                noteData.RectTransform.SetParent(_lines[noteData.NoteData.Line].transform);
+            }
+            else
+            {
+                SpawnNote(note);
+            }
         }
 
         public void ResetGrid()
@@ -89,11 +114,7 @@ namespace SkyGate.Game
 
             foreach (var note in MusicManager.Instance.Notes)
             {
-                var noteGo = Instantiate(_notePrefab, _lines[note.Line].transform);
-                var noteRT = (RectTransform)noteGo.transform;
-                noteRT.sizeDelta = new(noteRT.sizeDelta.x, _yNoteSize);
-                noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - globalTime);
-                _notes.Add(new() { NoteData = note, RectTransform = noteRT });
+                SpawnNote(note);
             }
 
             OnGridReset.Invoke();

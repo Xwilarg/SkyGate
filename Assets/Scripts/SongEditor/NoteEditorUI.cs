@@ -1,4 +1,5 @@
-﻿using SkyGate.Music;
+﻿using SkyGate.Game;
+using SkyGate.Music;
 using TMPro;
 using UnityEngine;
 
@@ -24,12 +25,14 @@ namespace SkyGate.SongEditor
 
         public void OnLineEdit(string value)
         {
-            
+            _noteData.Line = int.Parse(value);
+            GridManager.Instance.UpdatePosition(_noteData);
         }
 
         public void OnYEdit(string value)
         {
-
+            _noteData.Y = float.Parse(value);
+            GridManager.Instance.UpdatePosition(_noteData);
         }
     }
 }

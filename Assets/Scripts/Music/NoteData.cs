@@ -11,8 +11,8 @@ namespace SkyGate.Music
             _id = ID++;
         }
 
-        public int Line { private set; get; }
-        public float Y { private set; get; }
+        public int Line { set; get; }
+        public float Y { set; get; }
         public int _id { private set; get; }
 
         public static int ID = 0;
