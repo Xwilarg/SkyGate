@@ -59,7 +59,7 @@ namespace SkyGate.Game
             var noteRT = (RectTransform)noteGo.transform;
             noteRT.sizeDelta = new(noteRT.sizeDelta.x, _yNoteSize);
             noteRT.anchoredPosition = new(0f, note.Y * MusicManager.Instance.BPM - GlobalTime);
-            _notes.Add(new() { NoteData = note, RectTransform = noteRT });
+            _notes.Add(new() { NoteData = note, RectTransform = noteRT }); // TODO: Need to update the one in MusicManager too
         }
 
         public void UpdatePosition(NoteData note)
