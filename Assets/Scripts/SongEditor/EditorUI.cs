@@ -29,6 +29,9 @@ namespace SkyGate.SongEditor
         private TMP_Text _duration;
 
         [SerializeField]
+        private TMP_Text _currMode;
+
+        [SerializeField]
         private Scrollbar _progression;
 
         [SerializeField]
@@ -73,6 +76,18 @@ namespace SkyGate.SongEditor
                     go.GetComponent<NoteEditorUI>().Init(note);
                 }
             }));
+            UpdateModeText();
+        }
+
+        public void ToggleMode()
+        {
+            GridManager.Instance.CurrentMode = GridManager.Instance.CurrentMode == Game.PlayMode.Edit ? Game.PlayMode.Play : Game.PlayMode.Edit;
+            UpdateModeText();
+        }
+
+        private void UpdateModeText()
+        {
+            _currMode.text = GridManager.Instance.CurrentMode.ToString();
         }
 
         private string AddZero(int value)

@@ -36,6 +36,7 @@ namespace SkyGate.Game
         private const float _yNoteSize = 20f;
 
         public UnityEvent OnGridReset = new();
+        public PlayMode CurrentMode = PlayMode.Edit;
 
         private float GlobalTime => MusicManager.Instance.TimeElapsed * MusicManager.Instance.BPM;
 
@@ -177,32 +178,40 @@ namespace SkyGate.Game
         {
             if (value.phase == InputActionPhase.Started)
             {
+                var lineYPos = _lines[id].YPos;
                 _lines[id].ShowMark(true);
-                var targetNote = _notes.Where(x => x.NoteData.Line == id).OrderBy(x => x.NoteData.Y).FirstOrDefault();
-                if (targetNote != null)
+                if (CurrentMode == PlayMode.Play)
                 {
-                    var distance = Mathf.Abs(targetNote.RectTransform.anchoredPosition.y - _lines[id].YPos);
-                    int score = 0;
-                    if (distance < _yNoteSize)
+                    var targetNote = _notes.Where(x => x.NoteData.Line == id).OrderBy(x => x.NoteData.Y).FirstOrDefault();
+                    if (targetNote != null)
                     {
-                        score = 100;
+                        var distance = Mathf.Abs(targetNote.RectTransform.anchoredPosition.y - lineYPos);
+                        int score = 0;
+                        if (distance < _yNoteSize)
+                        {
+                            score = 100;
+                        }
+                        else if (distance < _yNoteSize * 2f)
+                        {
+                            score = 50;
+                        }
+                        else if (distance < _yNoteSize * 4f)
+                        {
+                            score = 25;
+                        }
+                        if (score > 0)
+                        {
+                            Destroy(targetNote.RectTransform.gameObject);
+                            _notes.RemoveAll(x => x.NoteData == targetNote.NoteData);
+                        }
                     }
-                    else if (distance < _yNoteSize * 2f)
-                    {
-                        score = 50;
-                    }
-                    else if (distance < _yNoteSize * 4f)
-                    {
-                        score = 25;
-                    }
-                    if (score > 0)
-                    {
-                        Destroy(targetNote.RectTransform.gameObject);
-                        _notes.RemoveAll(x => x.NoteData == targetNote.NoteData);
-                    }
+                    _sfxPlayer.clip = _hitSound;
+                    _sfxPlayer.Play();
                 }
-                _sfxPlayer.clip = _hitSound;
-                _sfxPlayer.Play();
+                else
+                {
+                    UpdatePosition(new NoteData(id, lineYPos));
+                }
             }
             else if (value.phase == InputActionPhase.Canceled)
             {
