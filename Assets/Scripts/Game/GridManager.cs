@@ -211,6 +211,7 @@ namespace SkyGate.Game
                 else
                 {
                     UpdatePosition(new NoteData(id, lineYPos));
+                    OnGridReset.Invoke();
                 }
             }
             else if (value.phase == InputActionPhase.Canceled)
